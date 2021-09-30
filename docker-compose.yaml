@@ -3,17 +3,19 @@ services:
   php-apache-environment:
     container_name: php-test
     build:
+      context: ./
       dockerfile: PhpDockerfile
     depends_on:
       - db
     volumes:
       - ./src:/var/www/html/
+      - ./api_registration.conf:/etc/apache2/sites-available/000-default.conf
     ports:
-      - 8000:80
+      - 8080:80
   db:
     container_name: db
     image: mysql
-    restart: always
+#    restart: always
     environment:
         MYSQL_ROOT_PASSWORD: mysqltest
         MYSQL_DATABASE: accounts
