@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Invoice;
 
 class InvoiceSeeder extends Seeder
 {
@@ -13,6 +14,11 @@ class InvoiceSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $invoices = Invoice::get();
+        foreach ($invoices as $invoice) {
+            $desc = explode(' ', $invoice->description);
+            $invoice->registration = array_pop($desc);
+            $invoice->save();
+        }
     }
 }
