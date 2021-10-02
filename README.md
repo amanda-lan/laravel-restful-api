@@ -4,7 +4,7 @@ Backend - using PHP Laravel framework
 
 Frontend - using React Library
 
-## Installation Backend
+## Backend Installation 
 
 Use Docker to set up the environment
 
@@ -45,7 +45,7 @@ http://localhost:8080/api/invoices
 
 http://localhost:8080/api/invoices/39058
 
-## Installation Frontend
+## Frontend Installation
 
 ```
 #go to src
