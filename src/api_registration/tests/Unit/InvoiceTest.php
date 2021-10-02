@@ -35,7 +35,7 @@ class InvoiceTest extends TestCase
         $this->json('GET', 'api/invoices/' . $invoice->invoice_no)
             ->assertStatus(200)
             ->assertJsonStructure([
-                'data' => [
+                'transactions' => [
                     '*' => [
                         "id",
                         "client_id",
@@ -47,7 +47,18 @@ class InvoiceTest extends TestCase
                         "amount_gross",
                         "invoiced",
                         "created",
-                        "modified"
+                        "modified",
+                        "registration"
+                    ]
+                ],
+                'summary' => [
+                    '*' => [
+                        'invoiced',
+                        'invoice_no',
+                        'total_amount_net',
+                        'total_amount_gst',
+                        'client_id',
+                        'contract_id'
                     ]
                 ]
         ]);

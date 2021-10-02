@@ -57,4 +57,17 @@ class InvoiceRepositoryEloquent extends BaseRepository implements InvoiceReposit
         }
     }
 
+    public function findInvoiceSummary($id, $columns = ['*'])
+    {
+        try {
+            return DB::table('invoices')
+                ->select(DB::raw('invoiced, invoice_no, sum(amount_net) total_amount_net, sum(amount_gst) total_amount_gst, client_id, count(contract_id) contract_id'))
+                ->where('invoice_no', $id)
+                ->groupByRaw('invoice_no, invoiced, client_id')
+                ->get();
+        } catch (\Exception $e) {
+            Log::debug("Group invoice query failed: " . $e->getMessage());
+        }
+    }
+
 }

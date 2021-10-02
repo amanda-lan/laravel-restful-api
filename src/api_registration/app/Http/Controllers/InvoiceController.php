@@ -56,10 +56,12 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        $invoice = $this->repository->find($id);
+        $transactions = $this->repository->find($id);
+        $summary = $this->repository->findInvoiceSummary($id);
 
         return response()->json([
-            'data' => $invoice,
+            'transactions' => $transactions,
+            'summary' => $summary
         ]);
 
     }

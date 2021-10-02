@@ -14,4 +14,6 @@ interface InvoiceRepository extends RepositoryInterface
     public function all($columns = ['*']);
 
     public function find($id, $columns = ['*']);
+
+    public function findInvoiceSummary($id, $columns = ['*']);
 }
