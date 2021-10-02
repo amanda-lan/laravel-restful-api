@@ -1,55 +1,73 @@
 # Eclipx PHP Coding Test
 
-## Purpose
+Backend - using PHP Laravel framework
 
-This small coding test is used as part of the interview process for openings
-with Eclipx. There are threee main tasks to be completed within the test, with
-the aim of demonstrating an understanding of PHP frameworks and database
-processes.
+Frontend - using React Library
 
-## Goal
+## Installation Backend
 
-The three challenges that need to be completed are:
+Use Docker to set up the environment
 
-1. Create a migration script that will create a new column in the database
-named **registration** as a VARCHAR(50) field and extract the registration
-number from the description field to fill in this new field.
-2. Create an HTML view showing a summary of the invoices that lists the invoice
-date, invoice number, total amount net and total amount gst, client_id and the
-number of contracts billed.
-3. Provide a link from the summary page to a details page that will show the
-line data for a single invoice from the database, along with the same total
-fields at the bottom of the page.
+```bash
+#build Dockerfile
+docker build . -f docker build . -f PhpDockerfile --no-cache
 
-## Criteria
+#run container
+docker-compose up
+```
 
-A PHP framework of you choosing **must** be used, preferably one built upon
-Symfony.
+Setup backend with Laravel
+```bash
+#go to src/api_registration folder and install packages
+composer install
 
-The user added code must follow the PSR-12 coding standard.
+#copy .env.example to .env
 
-## Bonus Points
+#go to php-test container
+docker exec -it php-test
 
-- A UI framework is utilised
-- The data retrieval for the UI is done through a REST call
-- Test Driven Development methodoly implemented
-- Readme on code design and framework use
+#api_registration folder
+cd api_registration
 
-## Tips
+#add registration column to invoice table
+php artisan migrate --path=/database/migrations/2021_09_30_014839_add_registration_column_to_invoices_table.php
 
-The Docker files provided will build an environment with PHP, Apache, MySQL and
-PHPMyAdmin. *docker-compose build* and *docker-compose up* will be helpful
-commands once Docker Desktop is installed.
+#seed data into registration
+php artisan db:seed --class=InvoiceSeeder
 
-MySQL will have a database initialised and accessible through the credentials
-provided in the docker-compose.yaml file.
+#unit test
+php artisan test
+```
 
-The *src* folder should be used to store the code required.
+There are two APIs provided:
 
-The Docker configuration can be updated to include Composer locally if this
-makes builds easier.
+http://localhost:8080/api/invoices
 
-PHPMyAdmin can be utilised via [http://localhost:8008](http://localhost:8008).
-The PHP app can be seen at [http://localhost:8000](http://localhost:8000). If
-these ports are used by your environment already they can be updated in the
-Docker config.
+http://localhost:8080/api/invoices/39058
+
+## Installation Frontend
+
+```
+#go to src
+git clone git@github.com:amanda-lan/react-simple-table-ui.git
+
+#go to /react-simple-table-ui
+npm install
+
+#strat the project on port 3000
+npm start
+
+#Run ESlint to analyzes your code to quickly find problems
+npx eslint . --fix
+
+#unit test
+npm run test
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
