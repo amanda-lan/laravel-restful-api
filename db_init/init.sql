@@ -11,7 +11,8 @@ CREATE TABLE `invoices` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `invoice_no` (`invoice_no`)
+  KEY `invoice_no` (`invoice_no`),
+  KEY `ind_invoice_no_grp` (`invoice_no`, `invoiced`, `client_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=501670 DEFAULT CHARSET=utf8;
 
 INSERT INTO invoices (`id`, `client_id`, `contract_id`, `invoice_no`, `description`,  `amount_net`, `amount_gst`, `amount_gross`, `invoiced`, `created`, `modified`)
